@@ -68,11 +68,14 @@ python -m habits.fixtures.load_demo_db --reset
 
 and is not part of the repository.
 
+Submission note (IU): The ZIP file uploaded in PebblePad must contain the same content as this GitHub repository.
+
 ---
 
 ## Requirements
 
-- Python 3.10 or higher
+- Python 3.10 or higher (project target)
+  - Note: IU acceptance criteria requires Python 3.7 or later — Python 3.10+ fulfills this.
 - pip (Python package manager)
 
 ---
@@ -112,6 +115,12 @@ source .venv/bin/activate
 
 ### 3 Install the project
 
+Upgrade pip (recommended):
+
+```
+python -m pip install --upgrade pip
+```
+
 ```
 pip install -e .
 ```
@@ -139,6 +148,8 @@ This will create:
 habits.db
 
 in the project root directory.
+
+Note: `--reset` deletes an existing `habits.db` in the project root and recreates the demo database.
 
 ---
 
@@ -191,29 +202,42 @@ Test coverage includes:
 
 ---
 
+Tests also validate the predefined demo fixtures required by the assignment (5 habits and 4 weeks of tracking data).
+
 ## Evaluation Guide
 
 For quick evaluation:
 
 1 Install the project
 
+```
+python -m pip install --upgrade pip
 pip install -e .
+```
 
-2 Generate demo database
+2 Generate demo database (5 predefined habits + 4 weeks test data)
 
+```
 python -m habits.fixtures.load_demo_db --reset
+```
 
 3 Start CLI
 
+```
 python -m habits.cli
+```
 
 4 Run analytics
 
+```
 streaks
+```
 
 5 Run tests
 
+```
 python -m pytest
+```
 
 ---
 
