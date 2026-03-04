@@ -2,14 +2,14 @@ from habits.analytics.analytics import habit_with_longest_streak
 from habits.domain.habit import Habit
 from habits.domain.enums import Periodicity
 from habits.domain.completion import Completion
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 
 def test_habit_with_longest_streak():
     h1 = Habit("Habit 1", Periodicity.DAILY)
     h2 = Habit("Habit 2", Periodicity.DAILY)
 
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
 
     # h1: 2-day streak
     for i in range(2):

@@ -1,11 +1,10 @@
-from datetime import datetime, timedelta
-
+from datetime import datetime, timedelta, timezone
 from habits.analytics.streaks import streaks_for_timestamps
 from habits.domain.enums import Periodicity
 
 
 def test_daily_streak_simple():
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     timestamps = [
         now - timedelta(days=2),
         now - timedelta(days=1),
@@ -19,7 +18,7 @@ def test_daily_streak_simple():
 
 
 def test_weekly_streak_simple():
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     timestamps = [
         now - timedelta(weeks=2),
         now - timedelta(weeks=1),
