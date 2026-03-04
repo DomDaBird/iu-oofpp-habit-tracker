@@ -23,6 +23,7 @@ from habits.ux.messages import (
     INVALID_COMMAND_MESSAGE,
     EMPTY_LIST_MESSAGE,
     STREAKS_HEADER,
+    HABIT_NOT_FOUND_MESSAGE,
 )
 
 
@@ -143,6 +144,21 @@ def run_cli(db_path: str) -> None:
                     print(f"🏅 New badge earned: {badge}")
 
                 print(f"💬 {result['sentiment_feedback']}")
+
+            elif command == "delete":
+                if len(parts) < 2:
+                    print("Usage: delete <habit_id>")
+                    continue
+
+                habit_id = parts[1]
+
+                # Friendly feedback if the habit does not exist
+                if tracker.get_habit(habit_id) is None:
+                    print(HABIT_NOT_FOUND_MESSAGE.format(habit_id))
+                    continue
+
+                tracker.delete_habit(habit_id)
+                print(f"🗑️ Habit deleted: {habit_id}")
 
             elif command == "streaks":
                 _print_streaks(tracker)

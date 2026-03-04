@@ -161,6 +161,7 @@ Available commands:
     add <name> <daily|weekly>
     list
     complete <habit_id> [note]
+    delete <habit_id>
     streaks
 
 Example:
