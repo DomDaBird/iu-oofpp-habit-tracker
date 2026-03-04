@@ -55,7 +55,7 @@ Dependencies are strictly one-directional via the service layer.
 
 The project structure inside this repository is organised as follows:
 
-- docs/ – Phase 1 and Phase 2 submission documents
+- docs/ – Phase 1 Phase 2 and Phase 3 submission documents
 - src/ – Application source code
 - tests/ – Unit tests (pytest)
 - pyproject.toml – Package configuration
