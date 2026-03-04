@@ -1,0 +1,58 @@
+# =========================
+# Python cache / bytecode
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# =========================
+# Virtual environments
+# =========================
+.venv/
+venv/
+env/
+clean_env/
+ENV/
+
+# =========================
+# Packaging / build artifacts
+# =========================
+build/
+dist/
+*.egg-info/
+*.egg
+pip-wheel-metadata/
+
+# =========================
+# Databases / local artifacts
+# =========================
+*.db
+*.sqlite3
+
+# =========================
+# Pytest
+# =========================
+.pytest_cache/
+.pytest_tmp/
+.coverage
+htmlcov/
+
+# =========================
+# IDE / Editor
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# OS / System files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Temporary / Office files
+# =========================
+~$*
+*.tmp
+*.bak
+*.swp
