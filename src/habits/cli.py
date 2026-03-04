@@ -28,19 +28,29 @@ from habits.ux.messages import (
 
 
 def _parse_periodicity(value: str) -> Periodicity:
+    """Parse user input (daily|weekly) into Periodicity enum."""
     try:
         return Periodicity.from_user_input(value)
     except ValueError as exc:
+        # re-raise with clean message for CLI output
         raise ValueError(str(exc))
 
 
-def _print_habits(tracker: HabitTracker) -> None:
+def _print_habits(tracker: HabitTracker, periodicity: Optional[Periodicity] = None) -> None:
+    """Print all habits or only habits of a given periodicity."""
     habits = tracker.list_habits()
+    if periodicity is not None:
+        habits = [h for h in habits if h.periodicity == periodicity]
+
     if not habits:
         print(EMPTY_LIST_MESSAGE)
         return
 
-    print("\nYour Habits:")
+    title = "Your Habits:"
+    if periodicity is not None:
+        title = f"Your Habits ({periodicity.value}):"
+
+    print(f"\n{title}")
     print("-" * 40)
     for h in habits:
         print(
@@ -61,8 +71,8 @@ def _print_streaks(tracker: HabitTracker) -> None:
         summary = tracker.streak_summary(h.id)
         print(
             f"{summary.habit_name} ({summary.periodicity.value})\n"
-            f"  Current streak : {summary.current_streak}\n"
-            f"  Longest streak : {summary.longest_streak}\n"
+            f"  Current streak  : {summary.current_streak}\n"
+            f"  Longest streak  : {summary.longest_streak}\n"
             f"  Total check-offs: {summary.total_completions}\n"
         )
 
@@ -103,7 +113,11 @@ def run_cli(db_path: str) -> None:
                     continue
 
                 name = " ".join(parts[1:-1])
-                periodicity = _parse_periodicity(parts[-1])
+                try:
+                    periodicity = _parse_periodicity(parts[-1])
+                except ValueError as exc:
+                    print(f"Invalid periodicity: {exc}")
+                    continue
 
                 habit = tracker.create_habit(name, periodicity)
                 print(
@@ -114,7 +128,22 @@ def run_cli(db_path: str) -> None:
                 )
 
             elif command == "list":
-                _print_habits(tracker)
+                # Optional: list daily|weekly
+                if len(parts) == 1:
+                    _print_habits(tracker)
+                    continue
+
+                if len(parts) == 2:
+                    try:
+                        periodicity = _parse_periodicity(parts[1])
+                    except ValueError as exc:
+                        print(f"Usage: list [daily|weekly]  (error: {exc})")
+                        continue
+
+                    _print_habits(tracker, periodicity=periodicity)
+                    continue
+
+                print("Usage: list [daily|weekly]")
 
             elif command == "complete":
                 if len(parts) < 2:
@@ -123,6 +152,11 @@ def run_cli(db_path: str) -> None:
 
                 habit_id = parts[1]
                 note: Optional[str] = " ".join(parts[2:]) if len(parts) > 2 else None
+
+                # Friendly feedback if the habit does not exist
+                if tracker.get_habit(habit_id) is None:
+                    print(HABIT_NOT_FOUND_MESSAGE.format(habit_id))
+                    continue
 
                 result = tracker.complete_habit(habit_id, note=note)
 

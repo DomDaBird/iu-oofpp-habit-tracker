@@ -20,6 +20,7 @@ ENV/
 build/
 dist/
 *.egg-info/
+.eggs/
 *.egg
 pip-wheel-metadata/
 
@@ -48,6 +49,11 @@ htmlcov/
 # =========================
 .DS_Store
 Thumbs.db
+
+# =========================
+# Python version manager
+# =========================
+.python-version
 
 # =========================
 # Temporary / Office files
