@@ -187,9 +187,10 @@ streaks
 
 Unit tests are implemented using **pytest**.
 
-Run all tests with:
+Install test dependencies and run all tests with:
 
 ```
+pip install -e ".[test]"
 python -m pytest
 ```
 
@@ -227,8 +228,15 @@ python -m habits.fixtures.load_demo_db --reset
 python -m habits.cli
 ```
 
-4 Run analytics
+4 Run analytics (inside CLI)
 
+Start the CLI:
+
+```
+python -m habits.cli
+```
+
+Then inside the CLI:
 ```
 streaks
 ```
@@ -236,6 +244,7 @@ streaks
 5 Run tests
 
 ```
+pip install -e ".[test]"
 python -m pytest
 ```
 
